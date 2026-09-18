@@ -13,10 +13,30 @@ function saveSession(next){ session = next; if(next) localStorage.setItem('3105_
 function show(id, yes=true){ $(id).classList.toggle('hidden', !yes); }
 function msg(id, value, ok=false){ const el=$(id); el.textContent=value||''; el.style.color=ok?'#78e5b2':'#ff9aa4'; }
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onerror=()=>reject(new Error('Não foi possível ler o arquivo.'));
+    reader.onload=()=>{
+      const value=String(reader.result||'');
+      resolve(value.includes(',')?value.split(',').pop():value);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function uploadPatchFile(file){
+  if(!file) return null;
+  if(!file.name.toLowerCase().endsWith('.3105')) throw new Error('Escolha um arquivo .3105.');
+  if(file.size>8*1024*1024) throw new Error('O arquivo precisa ter no máximo 8 MB.');
+  const content_base64=await fileToBase64(file);
+  return api({action:'upload_patch_file',filename:file.name,content_base64});
+}
+
 function humanError(value){
   const map={
     invalid_credentials:'Key/aparelho inválido.', unauthorized:'Sessão expirada.', forbidden:'Conta sem acesso administrativo.',
-    missing_patch_fields:'Preencha nome, app alvo, caminho e URL.', invalid_file_url:'A URL do patch é inválida.',
+    missing_patch_fields:'Preencha nome, app alvo, caminho e importe o arquivo .3105.', invalid_patch_extension:'Escolha um arquivo .3105.', empty_patch_file:'O arquivo está vazio.', invalid_patch_file:'Não foi possível ler o arquivo.', invalid_patch_size:'O arquivo precisa ter no máximo 8 MB.', patch_upload_failed:'Falha ao importar o arquivo.',
     patch_not_found:'Patch não encontrado.', bootstrap_already_claimed:'O administrador inicial já foi definido.',
     invalid_bootstrap_code:'Código de ativação inválido.'
   };
@@ -140,7 +160,7 @@ function renderPatches(){
     </div>
     ${x.description?`<p class="patch-desc">${escapeHtml(x.description)}</p>`:''}
     <div class="path-box"><small>Caminho</small><code>${escapeHtml(x.target_path)}</code></div>
-    <div class="path-box"><small>Arquivo</small><code>${escapeHtml(x.file_url)}</code></div>
+    <div class="path-box"><small>Arquivo importado</small><code>${escapeHtml((x.storage_path||'').split('/').pop()||'Arquivo interno')}</code></div>
     <div class="actions">
       <button data-patch-a="toggle" data-id="${x.id}" class="${x.enabled?'danger':'ok'}">${x.enabled?'Desativar':'Ativar'}</button>
       <button data-patch-a="edit" data-id="${x.id}" class="secondary">Editar</button>
@@ -155,7 +175,8 @@ function resetPatchForm(){
   $('savePatchBtn').textContent='Criar patch';
   show('cancelPatchEditBtn',false);
   $('patchName').value=''; $('patchCategory').value=''; $('patchSort').value='0';
-  $('patchBundle').value='com.dts.freefireth'; $('patchPath').value=''; $('patchUrl').value='';
+  $('patchBundle').value='com.dts.freefireth'; $('patchPath').value=''; $('patchFile').value='';
+  show('patchFileCurrent',false); $('patchFileCurrentName').textContent='';
   $('patchDescription').value=''; $('patchEnabled').checked=true; msg('patchMsg','');
 }
 function editPatch(x){
@@ -164,7 +185,8 @@ function editPatch(x){
   $('savePatchBtn').textContent='Salvar alterações';
   show('cancelPatchEditBtn',true);
   $('patchName').value=x.name||''; $('patchCategory').value=x.category||''; $('patchSort').value=x.sort_order??0;
-  $('patchBundle').value=x.target_bundle||'com.dts.freefireth'; $('patchPath').value=x.target_path||''; $('patchUrl').value=x.file_url||'';
+  $('patchBundle').value=x.target_bundle||'com.dts.freefireth'; $('patchPath').value=x.target_path||''; $('patchFile').value='';
+  $('patchFileCurrentName').textContent=(x.storage_path||'').split('/').pop()||'Arquivo interno'; show('patchFileCurrent',true);
   $('patchDescription').value=x.description||''; $('patchEnabled').checked=!!x.enabled;
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -214,24 +236,41 @@ $('licenseList').onclick=async(e)=>{
 };
 
 $('savePatchBtn').onclick=async()=>{
+  const button=$('savePatchBtn');
   try{
     msg('patchMsg','');
+    button.disabled=true;
+    button.textContent='Salvando...';
+
+    const file=$('patchFile').files?.[0]||null;
+    let storagePath=null;
+    if(file){
+      msg('patchMsg','Importando arquivo...');
+      const uploaded=await uploadPatchFile(file);
+      storagePath=uploaded?.storage_path||null;
+    }
+
+    if(!editingPatchID && !storagePath) throw new Error('Escolha o arquivo .3105 para importar.');
+
     const payload={
       name:$('patchName').value,
       category:$('patchCategory').value,
       sort_order:Number($('patchSort').value)||0,
       target_bundle:$('patchBundle').value,
       target_path:$('patchPath').value,
-      file_url:$('patchUrl').value,
       description:$('patchDescription').value,
       enabled:$('patchEnabled').checked,
     };
+    if(storagePath) payload.storage_path=storagePath;
+
     if(editingPatchID) await api({action:'update_patch',patch_id:editingPatchID,...payload});
     else await api({action:'create_patch',...payload});
-    msg('patchMsg',editingPatchID?'Patch atualizado.':'Patch criado.',true);
+
+    msg('patchMsg',editingPatchID?'Patch atualizado.':'Patch importado e criado.',true);
     resetPatchForm();
     await Promise.all([loadOverview(),loadPatches()]);
   }catch(e){msg('patchMsg',e.message)}
+  finally{button.disabled=false;button.textContent=editingPatchID?'Salvar alterações':'Criar patch';}
 };
 $('cancelPatchEditBtn').onclick=resetPatchForm;
 $('patchList').onclick=async(e)=>{

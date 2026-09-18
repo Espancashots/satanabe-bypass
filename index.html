@@ -136,7 +136,8 @@
               </select>
             </label>
             <label class="wide">Caminho alvo<input id="patchPath" maxlength="1000" placeholder="Documents/contentcache/Compulsory/ios/gameassetbundles/..." /></label>
-            <label class="wide">URL HTTPS do arquivo<input id="patchUrl" type="url" maxlength="2000" placeholder="https://.../arquivo.3105" /></label>
+            <label class="wide">Arquivo .3105<input id="patchFile" type="file" accept=".3105,application/octet-stream" /></label>
+            <div id="patchFileCurrent" class="wide path-box hidden"><small>Arquivo atual</small><code id="patchFileCurrentName"></code></div>
             <label class="wide">Descrição<textarea id="patchDescription" maxlength="600" placeholder="Descrição curta exibida no app"></textarea></label>
           </div>
           <div class="row wrap patch-actions-row">
