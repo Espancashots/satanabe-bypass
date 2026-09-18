@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#090b10" />
   <title>3105 Admin</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -13,7 +14,10 @@
         <div class="eyebrow">3105</div>
         <h1>Painel Admin</h1>
       </div>
-      <button id="logoutBtn" class="ghost hidden">Sair</button>
+      <div class="row compact">
+        <button id="globalRefreshBtn" class="ghost hidden">Atualizar</button>
+        <button id="logoutBtn" class="ghost hidden">Sair</button>
+      </div>
     </header>
 
     <section id="authView" class="card auth-card">
@@ -21,7 +25,7 @@
       <p class="muted">Use sua conta administrativa.</p>
       <label>E-mail<input id="email" type="email" autocomplete="email" /></label>
       <label>Senha<input id="password" type="password" autocomplete="current-password" /></label>
-      <div class="row">
+      <div class="row auth-actions">
         <button id="loginBtn">Entrar</button>
         <button id="signupBtn" class="secondary">Criar conta</button>
       </div>
@@ -30,60 +34,126 @@
 
     <section id="bootstrapView" class="card hidden">
       <h2>Ativar administrador</h2>
-      <p class="muted">Essa etapa acontece uma única vez.</p>
+      <p class="muted">Essa etapa acontece uma única vez para vincular a primeira conta ao painel.</p>
       <label>Código de bootstrap<input id="bootstrapCode" type="text" autocapitalize="characters" /></label>
       <button id="bootstrapBtn">Ativar este administrador</button>
       <p id="bootstrapMsg" class="msg"></p>
     </section>
 
     <section id="dashboard" class="hidden">
-      <div class="metrics">
-        <article class="metric"><span>Total</span><strong id="mTotal">0</strong></article>
-        <article class="metric"><span>Ativas</span><strong id="mActive">0</strong></article>
-        <article class="metric"><span>Aparelhos</span><strong id="mDevices">0</strong></article>
-        <article class="metric"><span>Validações</span><strong id="mValidations">0</strong></article>
-      </div>
+      <nav class="tabs" aria-label="Seções do painel">
+        <button class="tab active" data-panel="overview">Overview</button>
+        <button class="tab" data-panel="keys">Keys</button>
+        <button class="tab" data-panel="patches">Patches</button>
+      </nav>
 
-      <section class="card">
-        <div class="section-head"><div><h2>Acesso do app</h2><p class="muted">Liga ou bloqueia novas validações.</p></div></div>
-        <div class="row wrap">
-          <label class="switchline"><input id="appEnabled" type="checkbox" /><span>Aplicativo liberado</span></label>
-          <input id="appMessage" class="grow" placeholder="Mensagem exibida quando bloqueado" />
-          <button id="saveAccessBtn">Salvar</button>
+      <section id="overviewPanel" class="panel">
+        <div class="metrics metrics-wide">
+          <article class="metric"><span>Keys ativas</span><strong id="mActive">0</strong></article>
+          <article class="metric"><span>Vencem hoje</span><strong id="mToday">0</strong></article>
+          <article class="metric"><span>Vencem amanhã</span><strong id="mTomorrow">0</strong></article>
+          <article class="metric"><span>Próximos 3 dias</span><strong id="m3Days">0</strong></article>
+          <article class="metric"><span>Aparelhos</span><strong id="mDevices">0</strong></article>
+          <article class="metric"><span>Patches ativos</span><strong id="mPatches">0</strong></article>
+          <article class="metric"><span>Total de keys</span><strong id="mTotal">0</strong></article>
+          <article class="metric"><span>Validações</span><strong id="mValidations">0</strong></article>
         </div>
-        <p id="accessMsg" class="msg"></p>
+
+        <section class="card">
+          <div class="section-head">
+            <div><h2>Acesso do app</h2><p class="muted">Liga ou bloqueia novas validações de key.</p></div>
+            <span id="appStatusBadge" class="status-pill">—</span>
+          </div>
+          <div class="row wrap">
+            <label class="switchline"><input id="appEnabled" type="checkbox" /><span>Aplicativo liberado</span></label>
+            <input id="appMessage" class="grow" placeholder="Mensagem exibida quando bloqueado" />
+            <button id="saveAccessBtn">Salvar</button>
+          </div>
+          <p id="accessMsg" class="msg"></p>
+        </section>
+
+        <section class="card">
+          <div class="section-head"><div><h2>Resumo</h2><p class="muted">Situação atual do sistema.</p></div></div>
+          <div class="summary-grid">
+            <div><span>Total de patches</span><strong id="mPatchesTotal">0</strong></div>
+            <div><span>Keys inativas/revogadas</span><strong id="mInactive">0</strong></div>
+          </div>
+        </section>
       </section>
 
-      <section class="card">
-        <div class="section-head"><div><h2>Criar keys</h2><p class="muted">Geração e vinculação por aparelho.</p></div></div>
-        <div class="grid-form">
-          <label>Duração
-            <select id="duration">
-              <option value="10800">3 horas</option>
-              <option value="36000">10 horas</option>
-              <option value="86400" selected>1 dia</option>
-              <option value="259200">3 dias</option>
-              <option value="604800">7 dias</option>
-              <option value="2592000">30 dias</option>
-              <option value="31536000">1 ano</option>
-            </select>
-          </label>
-          <label>Aparelhos<input id="maxDevices" type="number" min="1" max="20" value="1" /></label>
-          <label>Quantidade<input id="quantity" type="number" min="1" max="50" value="1" /></label>
-          <label class="wide">Observação<input id="note" type="text" maxlength="500" placeholder="Cliente, pedido, observação..." /></label>
-        </div>
-        <button id="createBtn">Gerar key(s)</button>
-        <textarea id="createdKeys" class="key-output" readonly placeholder="As keys criadas aparecem aqui"></textarea>
-        <p id="createMsg" class="msg"></p>
+      <section id="keysPanel" class="panel hidden">
+        <section class="card">
+          <div class="section-head"><div><h2>Criar keys</h2><p class="muted">Geração e limite de aparelhos.</p></div></div>
+          <div class="grid-form">
+            <label>Duração
+              <select id="duration">
+                <option value="10800">3 horas</option>
+                <option value="36000">10 horas</option>
+                <option value="86400" selected>1 dia</option>
+                <option value="259200">3 dias</option>
+                <option value="604800">7 dias</option>
+                <option value="2592000">30 dias</option>
+                <option value="31536000">1 ano</option>
+              </select>
+            </label>
+            <label>Aparelhos<input id="maxDevices" type="number" min="1" max="20" value="1" /></label>
+            <label>Quantidade<input id="quantity" type="number" min="1" max="50" value="1" /></label>
+            <label class="wide">Observação<input id="note" type="text" maxlength="500" placeholder="Cliente, pedido, observação..." /></label>
+          </div>
+          <button id="createBtn">Gerar key(s)</button>
+          <textarea id="createdKeys" class="key-output" readonly placeholder="As keys criadas aparecem aqui"></textarea>
+          <p id="createMsg" class="msg"></p>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div><h2>Keys</h2><p class="muted">Gerencie status, validade e aparelhos.</p></div>
+            <button id="refreshBtn" class="secondary">Atualizar</button>
+          </div>
+          <input id="search" type="search" placeholder="Buscar key ou observação" />
+          <div id="licenseList" class="license-list"></div>
+        </section>
       </section>
 
-      <section class="card">
-        <div class="section-head">
-          <div><h2>Keys</h2><p class="muted">Gerencie status, validade e aparelhos.</p></div>
-          <button id="refreshBtn" class="secondary">Atualizar</button>
-        </div>
-        <input id="search" type="search" placeholder="Buscar key ou observação" />
-        <div id="licenseList" class="license-list"></div>
+      <section id="patchesPanel" class="panel hidden">
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <h2 id="patchFormTitle">Novo patch</h2>
+              <p class="muted">Cadastre o arquivo que aparecerá na lista de patches da IPA.</p>
+            </div>
+            <button id="cancelPatchEditBtn" class="secondary hidden">Cancelar edição</button>
+          </div>
+
+          <div class="grid-form patch-form">
+            <label>Nome<input id="patchName" maxlength="120" placeholder="Ex.: Patch 01" /></label>
+            <label>Categoria<input id="patchCategory" maxlength="80" placeholder="Ex.: Cache" /></label>
+            <label>Ordem<input id="patchSort" type="number" value="0" /></label>
+            <label>App alvo
+              <select id="patchBundle">
+                <option value="com.dts.freefireth">Free Fire Normal</option>
+                <option value="com.dts.freefiremax">Free Fire MAX</option>
+              </select>
+            </label>
+            <label class="wide">Caminho alvo<input id="patchPath" maxlength="1000" placeholder="Documents/contentcache/Compulsory/ios/gameassetbundles/..." /></label>
+            <label class="wide">URL HTTPS do arquivo<input id="patchUrl" type="url" maxlength="2000" placeholder="https://.../arquivo.3105" /></label>
+            <label class="wide">Descrição<textarea id="patchDescription" maxlength="600" placeholder="Descrição curta exibida no app"></textarea></label>
+          </div>
+          <div class="row wrap patch-actions-row">
+            <label class="switchline"><input id="patchEnabled" type="checkbox" checked /><span>Patch ativo</span></label>
+            <button id="savePatchBtn">Criar patch</button>
+          </div>
+          <p id="patchMsg" class="msg"></p>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div><h2>Patches cadastrados</h2><p class="muted">Ative, desative, edite ou exclua.</p></div>
+            <button id="refreshPatchesBtn" class="secondary">Atualizar</button>
+          </div>
+          <input id="patchSearch" type="search" placeholder="Buscar nome, categoria ou caminho" />
+          <div id="patchList" class="license-list"></div>
+        </section>
       </section>
     </section>
   </main>
