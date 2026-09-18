@@ -4,14 +4,23 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#090b10" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>3105 Admin</title>
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+:root{color-scheme:dark;--bg:#090b10;--panel:#121620;--panel2:#181e2a;--text:#f5f7fb;--muted:#8992a3;--line:#252d3b;--accent:#5aa2ff;--danger:#ff5d6c;--ok:#48d597;--warn:#ffbf5a}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#07090d,#0d1119);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Inter,system-ui,sans-serif}.shell{max-width:1160px;margin:0 auto;padding:28px 18px 64px}.topbar,.section-head,.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.topbar{margin-bottom:18px}.compact{justify-content:flex-end}.eyebrow{font-size:12px;letter-spacing:.18em;color:var(--accent);font-weight:800}.topbar h1,.card h2{margin:4px 0}.card{background:rgba(18,22,32,.92);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:16px;box-shadow:0 18px 50px rgba(0,0,0,.22)}.auth-card{max-width:520px;margin:7vh auto 0}.muted{color:var(--muted);margin:4px 0 14px}.hidden{display:none!important}label{display:grid;gap:7px;font-size:13px;color:#c8cfdb;margin:12px 0}input,select,textarea{width:100%;background:#0c1017;border:1px solid #2a3342;border-radius:12px;padding:12px;color:var(--text);outline:none;font:inherit}textarea{resize:vertical;min-height:86px}input:focus,select:focus,textarea:focus{border-color:var(--accent)}button{border:0;border-radius:12px;padding:11px 16px;background:var(--accent);color:white;font-weight:700;cursor:pointer;font:inherit}button.secondary,.ghost{background:#202735}.ghost{padding:9px 13px}.danger{background:var(--danger)}.ok{background:var(--ok);color:#07120d}.msg{min-height:18px;color:#ff9aa4;font-size:13px}.tabs{display:flex;gap:8px;overflow:auto;padding:4px 0 14px;position:sticky;top:0;z-index:20;background:linear-gradient(180deg,#090b10 75%,transparent)}.tab{background:#151b26;color:#aeb7c7;white-space:nowrap}.tab.active{background:var(--accent);color:#fff}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.metrics-wide{grid-template-columns:repeat(4,1fr)}.metric{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}.metric span{display:block;color:var(--muted);font-size:12px}.metric strong{display:block;font-size:28px;margin-top:7px}.grid-form{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.grid-form .wide{grid-column:1/-1}.patch-form{grid-template-columns:repeat(3,1fr)}.wrap{flex-wrap:wrap}.grow{flex:1;min-width:240px}.switchline{display:flex;align-items:center;gap:8px;margin:0}.switchline input{width:auto}.key-output{min-height:100px;margin-top:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.license-list{display:grid;gap:10px;margin-top:12px}.license{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:14px}.license-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.license-key{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800;word-break:break-all}.badge,.status-pill{font-size:11px;padding:5px 8px;border-radius:999px;background:#283246;color:#dce6f8;font-weight:800}.badge.active,.status-pill.online{background:rgba(72,213,151,.14);color:#78e5b2}.badge.revoked,.status-pill.offline{background:rgba(255,93,108,.14);color:#ff8994}.badge.expired{background:rgba(255,191,90,.14);color:#ffd18a}.license-meta{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0;color:var(--muted);font-size:12px}.actions{display:flex;flex-wrap:wrap;gap:8px}.actions button{padding:8px 10px;font-size:12px}.section-head{margin-bottom:8px}.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.summary-grid>div{padding:14px;border-radius:14px;background:#0d121b;border:1px solid var(--line)}.summary-grid span{display:block;color:var(--muted);font-size:12px}.summary-grid strong{display:block;font-size:24px;margin-top:5px}.path-box{display:grid;gap:5px;background:#0d121b;border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0}.path-box small{color:var(--muted)}.path-box code{font-size:11px;white-space:normal;word-break:break-all;color:#cbd8ea}.patch-desc{color:#c0c8d5;font-size:13px;margin:8px 0}.patch-actions-row{justify-content:flex-start}.auth-actions{justify-content:flex-start}
+@media(max-width:900px){.metrics-wide{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.shell{padding:22px 14px 50px}.metrics,.metrics-wide{grid-template-columns:repeat(2,1fr)}.grid-form,.patch-form{grid-template-columns:1fr}.license-top{display:block}.topbar h1{font-size:26px}.topbar{align-items:flex-start}.topbar .compact{gap:7px}.topbar button{padding:8px 10px}.tabs{margin:0 -2px}.summary-grid{grid-template-columns:1fr}.row.auth-actions{flex-wrap:wrap}.row.auth-actions button{flex:1;min-width:120px}}
+
+</style>
 </head>
 <body>
   <main class="shell">
     <header class="topbar">
       <div>
-        <div class="eyebrow">3105</div>
+        <div class="eyebrow">3105 • painel v6 LOGIN FIX</div>
         <h1>Painel Admin</h1>
       </div>
       <div class="row compact">
@@ -158,6 +167,316 @@
       </section>
     </section>
   </main>
-  <script src="app-v4.js?v=4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+const SUPABASE_URL = 'https://nefqzfddxyhswhluslsk.supabase.co';
+const PUBLISHABLE_KEY = 'sb_publishable_ZVgYxkCJATt02CJs3GBkoA_VibY79aG';
+const ADMIN_API = `${SUPABASE_URL}/functions/v1/admin-api`;
+
+const $ = (id) => document.getElementById(id);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, PUBLISHABLE_KEY, {
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+});
+let session = null;
+let licenses = [];
+let patches = [];
+let editingPatchID = null;
+let activePanel = 'overview';
+
+function saveSession(next){ session = next || null; }
+function show(id, yes=true){ $(id).classList.toggle('hidden', !yes); }
+function msg(id, value, ok=false){ const el=$(id); el.textContent=value||''; el.style.color=ok?'#78e5b2':'#ff9aa4'; }
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onerror=()=>reject(new Error('Não foi possível ler o arquivo.'));
+    reader.onload=()=>{
+      const value=String(reader.result||'');
+      resolve(value.includes(',')?value.split(',').pop():value);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function uploadPatchFile(file){
+  if(!file) return null;
+  if(!file.name.toLowerCase().endsWith('.3105')) throw new Error('Escolha um arquivo .3105.');
+  if(file.size>8*1024*1024) throw new Error('O arquivo precisa ter no máximo 8 MB.');
+  const content_base64=await fileToBase64(file);
+  return api({action:'upload_patch_file',filename:file.name,content_base64});
+}
+
+function humanError(value){
+  const map={
+    invalid_credentials:'Key/aparelho inválido.', unauthorized:'Sessão expirada.', forbidden:'Conta sem acesso administrativo.',
+    missing_patch_fields:'Preencha nome, app alvo, caminho e importe o arquivo .3105.', invalid_patch_extension:'Escolha um arquivo .3105.', empty_patch_file:'O arquivo está vazio.', invalid_patch_file:'Não foi possível ler o arquivo.', invalid_patch_size:'O arquivo precisa ter no máximo 8 MB.', patch_upload_failed:'Falha ao importar o arquivo.',
+    patch_not_found:'Patch não encontrado.', bootstrap_already_claimed:'O administrador inicial já foi definido.',
+    invalid_bootstrap_code:'Código de ativação inválido.'
+  };
+  return map[value]||value||'Falha no servidor';
+}
+
+async function refreshSession(){
+  const { data, error } = await supabaseClient.auth.refreshSession();
+  if(error || !data?.session){ saveSession(null); return false; }
+  saveSession(data.session); return true;
+}
+
+async function api(payload, retry=true){
+  if(!session?.access_token) throw Object.assign(new Error('Sessão expirada'),{status:401});
+  const res = await fetch(ADMIN_API,{method:'POST',headers:{'Content-Type':'application/json',apikey:PUBLISHABLE_KEY,Authorization:`Bearer ${session.access_token}`},body:JSON.stringify(payload)});
+  if(res.status===401 && retry && await refreshSession()) return api(payload,false);
+  const data = await res.json().catch(()=>({}));
+  if(!res.ok) { const e = new Error(humanError(data.detail||data.error||`Erro ${res.status}`)); e.status=res.status; e.code=data.error; throw e; }
+  return data;
+}
+
+function setPanel(name){
+  activePanel=name;
+  document.querySelectorAll('.panel').forEach(x=>x.classList.add('hidden'));
+  $(`${name}Panel`).classList.remove('hidden');
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.panel===name));
+  if(name==='overview') loadOverview().catch(e=>alert(e.message));
+  if(name==='keys') loadLicenses().catch(e=>alert(e.message));
+  if(name==='patches') loadPatches().catch(e=>alert(e.message));
+}
+
+async function enterDashboard(){
+  show('authView',false); show('logoutBtn',true); show('globalRefreshBtn',true);
+  try{
+    await api({action:'me'});
+    show('bootstrapView',false); show('dashboard',true);
+    await Promise.all([loadOverview(),loadLicenses(),loadAccess(),loadPatches()]);
+    setPanel(activePanel);
+  }catch(e){
+    if(e.status===403){ show('bootstrapView',true); show('dashboard',false); show('globalRefreshBtn',false); }
+    else { saveSession(null); show('authView',true); show('logoutBtn',false); show('globalRefreshBtn',false); msg('authMsg','Faça login novamente.'); }
+  }
+}
+
+async function loadOverview(){
+  const d=await api({action:'overview'});
+  $('mTotal').textContent=d.total_licenses??0;
+  $('mActive').textContent=d.active_licenses??0;
+  $('mDevices').textContent=d.devices??0;
+  $('mValidations').textContent=d.validations??0;
+  $('mToday').textContent=d.expiring_today??0;
+  $('mTomorrow').textContent=d.expiring_tomorrow??0;
+  $('m3Days').textContent=d.expiring_3_days??0;
+  $('mPatches').textContent=d.active_patches??0;
+  $('mPatchesTotal').textContent=d.total_patches??0;
+  $('mInactive').textContent=Math.max(0,(d.total_licenses??0)-(d.active_licenses??0));
+}
+
+async function loadAccess(){
+  const d=await api({action:'app_access_get'});
+  const enabled=!!d.value?.enabled;
+  $('appEnabled').checked=enabled;
+  $('appMessage').value=d.value?.message||'';
+  const badge=$('appStatusBadge');
+  badge.textContent=enabled?'ONLINE':'BLOQUEADO';
+  badge.className=`status-pill ${enabled?'online':'offline'}`;
+}
+
+async function loadLicenses(){
+  const d=await api({action:'list_licenses'}); licenses=d.licenses||[]; renderLicenses();
+}
+function formatDate(v){ try{return new Date(v).toLocaleString('pt-BR')}catch{return v} }
+function renderLicenses(){
+  const q=$('search').value.trim().toLowerCase();
+  const list=licenses.filter(x=>!q || x.license_key.toLowerCase().includes(q) || (x.note||'').toLowerCase().includes(q));
+  $('licenseList').innerHTML=list.map(x=>{
+    const deviceCount=x.license_devices?.[0]?.count ?? 0;
+    const expired=new Date(x.expires_at).getTime()<=Date.now();
+    const effective=x.status==='active'&&!expired?'active':(expired?'expired':x.status);
+    const label=effective==='active'?'ATIVA':effective==='expired'?'EXPIRADA':'REVOGADA';
+    return `<article class="license">
+      <div class="license-top"><div><div class="license-key">${escapeHtml(x.license_key)}</div><div class="license-meta"><span>Expira: ${formatDate(x.expires_at)}</span><span>Aparelhos: ${deviceCount}/${x.max_devices}</span>${x.note?`<span>${escapeHtml(x.note)}</span>`:''}</div></div><span class="badge ${effective}">${label}</span></div>
+      <div class="actions">
+        <button data-a="copy" data-id="${x.id}" class="secondary">Copiar</button>
+        <button data-a="toggle" data-id="${x.id}" class="${x.status==='active'?'danger':'ok'}">${x.status==='active'?'Revogar':'Ativar'}</button>
+        <button data-a="day" data-id="${x.id}" class="secondary">+1 dia</button>
+        <button data-a="week" data-id="${x.id}" class="secondary">+7 dias</button>
+        <button data-a="devices" data-id="${x.id}" class="secondary">Limite</button>
+        <button data-a="reset" data-id="${x.id}" class="secondary">Reset aparelhos</button>
+        <button data-a="delete" data-id="${x.id}" class="danger">Excluir</button>
+      </div></article>`;
+  }).join('') || '<p class="muted">Nenhuma key encontrada.</p>';
+}
+
+async function loadPatches(){
+  const d=await api({action:'list_patches'}); patches=d.patches||[]; renderPatches();
+}
+function renderPatches(){
+  const q=$('patchSearch').value.trim().toLowerCase();
+  const list=patches.filter(x=>!q || [x.name,x.category,x.target_bundle,x.target_path].some(v=>String(v||'').toLowerCase().includes(q)));
+  $('patchList').innerHTML=list.map(x=>`<article class="license patch-card">
+    <div class="license-top">
+      <div>
+        <div class="license-key">${escapeHtml(x.name)}</div>
+        <div class="license-meta">
+          ${x.category?`<span>${escapeHtml(x.category)}</span>`:''}
+          <span>${escapeHtml(x.target_bundle)}</span>
+          <span>Ordem: ${Number(x.sort_order)||0}</span>
+        </div>
+      </div>
+      <span class="badge ${x.enabled?'active':'revoked'}">${x.enabled?'ATIVO':'DESATIVADO'}</span>
+    </div>
+    ${x.description?`<p class="patch-desc">${escapeHtml(x.description)}</p>`:''}
+    <div class="path-box"><small>Caminho</small><code>${escapeHtml(x.target_path)}</code></div>
+    <div class="path-box"><small>Arquivo importado</small><code>${escapeHtml((x.storage_path||'').split('/').pop()||'Arquivo interno')}</code></div>
+    <div class="actions">
+      <button data-patch-a="toggle" data-id="${x.id}" class="${x.enabled?'danger':'ok'}">${x.enabled?'Desativar':'Ativar'}</button>
+      <button data-patch-a="edit" data-id="${x.id}" class="secondary">Editar</button>
+      <button data-patch-a="delete" data-id="${x.id}" class="danger">Excluir</button>
+    </div>
+  </article>`).join('') || '<p class="muted">Nenhum patch cadastrado.</p>';
+}
+
+function resetPatchForm(){
+  editingPatchID=null;
+  $('patchFormTitle').textContent='Novo patch';
+  $('savePatchBtn').textContent='Criar patch';
+  show('cancelPatchEditBtn',false);
+  $('patchName').value=''; $('patchCategory').value=''; $('patchSort').value='0';
+  $('patchBundle').value='com.dts.freefireth'; $('patchPath').value=''; $('patchFile').value='';
+  show('patchFileCurrent',false); $('patchFileCurrentName').textContent='';
+  $('patchDescription').value=''; $('patchEnabled').checked=true; msg('patchMsg','');
+}
+function editPatch(x){
+  editingPatchID=x.id;
+  $('patchFormTitle').textContent='Editar patch';
+  $('savePatchBtn').textContent='Salvar alterações';
+  show('cancelPatchEditBtn',true);
+  $('patchName').value=x.name||''; $('patchCategory').value=x.category||''; $('patchSort').value=x.sort_order??0;
+  $('patchBundle').value=x.target_bundle||'com.dts.freefireth'; $('patchPath').value=x.target_path||''; $('patchFile').value='';
+  $('patchFileCurrentName').textContent=(x.storage_path||'').split('/').pop()||'Arquivo interno'; show('patchFileCurrent',true);
+  $('patchDescription').value=x.description||''; $('patchEnabled').checked=!!x.enabled;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+$('loginBtn').onclick=async()=>{
+  const btn=$('loginBtn');
+  try{
+    msg('authMsg','Entrando...',true);
+    btn.disabled=true;
+    const email=$('email').value.trim(), password=$('password').value;
+    if(!email||!password) throw new Error('Preencha e-mail e senha.');
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if(error) throw error;
+    if(!data?.session) throw new Error('O Supabase não retornou uma sessão.');
+    saveSession(data.session);
+    msg('authMsg','Login confirmado. Abrindo painel...',true);
+    await enterDashboard();
+  }catch(e){
+    console.error('LOGIN ERROR', e);
+    const detail = e?.message || String(e);
+    msg('authMsg',`Falha no login: ${detail}`);
+  }finally{btn.disabled=false;}
+};
+$('signupBtn').onclick=async()=>{
+  const btn=$('signupBtn');
+  try{
+    msg('authMsg','Criando conta...',true);
+    btn.disabled=true;
+    const email=$('email').value.trim(), password=$('password').value;
+    if(!email||!password) throw new Error('Preencha e-mail e senha antes de criar a conta.');
+    const { data, error } = await supabaseClient.auth.signUp({ email, password });
+    if(error) throw error;
+    if(data?.session){saveSession(data.session);await enterDashboard()}
+    else msg('authMsg','Conta criada. Confirme o e-mail e depois entre.',true);
+  }catch(e){msg('authMsg',`Falha ao criar conta: ${e?.message||e}`)}
+  finally{btn.disabled=false;}
+};
+$('logoutBtn').onclick=async()=>{try{await supabaseClient.auth.signOut()}catch{} saveSession(null); location.reload()};
+$('bootstrapBtn').onclick=async()=>{try{await api({action:'bootstrap',code:$('bootstrapCode').value.trim()});msg('bootstrapMsg','Administrador ativado.',true);await enterDashboard()}catch(e){msg('bootstrapMsg',e.message)}};
+
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>setPanel(b.dataset.panel));
+$('globalRefreshBtn').onclick=async()=>{try{await Promise.all([loadOverview(),loadLicenses(),loadAccess(),loadPatches()])}catch(e){alert(e.message)}};
+$('refreshBtn').onclick=async()=>{await Promise.all([loadOverview(),loadLicenses()])};
+$('refreshPatchesBtn').onclick=async()=>{await Promise.all([loadOverview(),loadPatches()])};
+$('search').oninput=renderLicenses;
+$('patchSearch').oninput=renderPatches;
+
+$('saveAccessBtn').onclick=async()=>{try{await api({action:'app_access_set',enabled:$('appEnabled').checked,message:$('appMessage').value});msg('accessMsg','Salvo.',true);await Promise.all([loadAccess(),loadOverview()])}catch(e){msg('accessMsg',e.message)}};
+$('createBtn').onclick=async()=>{try{msg('createMsg','');const d=await api({action:'create_license',duration_seconds:Number($('duration').value),max_devices:Number($('maxDevices').value),quantity:Number($('quantity').value),note:$('note').value});$('createdKeys').value=(d.created||[]).map(x=>x.license_key).join('\n');msg('createMsg',`${d.created?.length||0} key(s) criada(s).`,true);await Promise.all([loadOverview(),loadLicenses()])}catch(e){msg('createMsg',e.message)}};
+
+$('licenseList').onclick=async(e)=>{
+  const b=e.target.closest('button[data-a]'); if(!b)return; const x=licenses.find(v=>v.id===b.dataset.id); if(!x)return;
+  try{
+    if(b.dataset.a==='copy') return navigator.clipboard.writeText(x.license_key);
+    if(b.dataset.a==='toggle') await api({action:'set_status',license_id:x.id,enabled:x.status!=='active'});
+    if(b.dataset.a==='day') await api({action:'extend_license',license_id:x.id,seconds:86400});
+    if(b.dataset.a==='week') await api({action:'extend_license',license_id:x.id,seconds:604800});
+    if(b.dataset.a==='devices'){const n=Number(prompt('Novo limite de aparelhos (1-20):',x.max_devices));if(!Number.isInteger(n)||n<1||n>20)return;await api({action:'set_max_devices',license_id:x.id,max_devices:n});}
+    if(b.dataset.a==='reset'){if(!confirm('Resetar os aparelhos desta key?'))return;await api({action:'reset_devices',license_id:x.id});}
+    if(b.dataset.a==='delete'){if(!confirm('Excluir esta key definitivamente?'))return;await api({action:'delete_license',license_id:x.id});}
+    await Promise.all([loadOverview(),loadLicenses()]);
+  }catch(err){alert(err.message)}
+};
+
+$('savePatchBtn').onclick=async()=>{
+  const button=$('savePatchBtn');
+  try{
+    msg('patchMsg','');
+    button.disabled=true;
+    button.textContent='Salvando...';
+
+    const file=$('patchFile').files?.[0]||null;
+    let storagePath=null;
+    if(file){
+      msg('patchMsg','Importando arquivo...');
+      const uploaded=await uploadPatchFile(file);
+      storagePath=uploaded?.storage_path||null;
+    }
+
+    if(!editingPatchID && !storagePath) throw new Error('Escolha o arquivo .3105 para importar.');
+
+    const payload={
+      name:$('patchName').value,
+      category:$('patchCategory').value,
+      sort_order:Number($('patchSort').value)||0,
+      target_bundle:$('patchBundle').value,
+      target_path:$('patchPath').value,
+      description:$('patchDescription').value,
+      enabled:$('patchEnabled').checked,
+    };
+    if(storagePath) payload.storage_path=storagePath;
+
+    if(editingPatchID) await api({action:'update_patch',patch_id:editingPatchID,...payload});
+    else await api({action:'create_patch',...payload});
+
+    msg('patchMsg',editingPatchID?'Patch atualizado.':'Patch importado e criado.',true);
+    resetPatchForm();
+    await Promise.all([loadOverview(),loadPatches()]);
+  }catch(e){msg('patchMsg',e.message)}
+  finally{button.disabled=false;button.textContent=editingPatchID?'Salvar alterações':'Criar patch';}
+};
+$('cancelPatchEditBtn').onclick=resetPatchForm;
+$('patchList').onclick=async(e)=>{
+  const b=e.target.closest('button[data-patch-a]'); if(!b)return; const x=patches.find(v=>v.id===b.dataset.id); if(!x)return;
+  try{
+    if(b.dataset.patchA==='edit') return editPatch(x);
+    if(b.dataset.patchA==='toggle') await api({action:'update_patch',patch_id:x.id,enabled:!x.enabled});
+    if(b.dataset.patchA==='delete'){if(!confirm(`Excluir o patch “${x.name}”?`))return;await api({action:'delete_patch',patch_id:x.id}); if(editingPatchID===x.id)resetPatchForm();}
+    await Promise.all([loadOverview(),loadPatches()]);
+  }catch(err){alert(err.message)}
+};
+
+(async()=>{
+  try{
+    const { data, error } = await supabaseClient.auth.getSession();
+    if(error) throw error;
+    saveSession(data?.session || null);
+    if(session?.access_token) await enterDashboard();
+  }catch(e){
+    console.error('BOOT AUTH ERROR', e);
+    saveSession(null);
+    msg('authMsg',`Falha ao iniciar autenticação: ${e?.message||e}`);
+  }
+})();
+
+</script>
 </body>
 </html>
